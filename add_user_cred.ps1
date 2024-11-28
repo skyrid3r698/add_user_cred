@@ -10,7 +10,15 @@ Write-Host "NuGet ist installiert. Installation wird übersprungen.."
 
 if ((Get-InstalledModule -Name CredentialManager) -eq $null) {
 Write-Host "CredentialManager ist nicht installiert. Installiere.."
+Try {
 Install-Module CredentialManager -Force -SkipPublisherCheck -Scope CurrentUser -Confirm:$False
+}
+#maybe nuget needs a restart of powershell
+catch {
+Write-Host "CredentailManager Install failed. Trying again.."
+start powershell $PSCommandPath
+exit
+}
 Import-Module CredentialManager 
 }
 else {
