@@ -1,0 +1,1 @@
+A simple script to have users add different credentials to their credential manager. For Example this ist being used for Windows Server enviroments, where network shares outside of the control of you exist with different credentials. In this case the shares from your group policy are not being mounted unless the correct credentials exist.
