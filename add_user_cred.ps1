@@ -6,12 +6,12 @@ $domainname = "lv.asb-mv.de"
 $servername = "files22.lv.asb-mv.de"
 $NuGetInstalled = $null
 $NuGetInstalled = "Get-PackageProvider | findstr NuGet"
-$CredentialManagerInstalled = Try {Get-InstalledModule -Name CredentialManager} catch {$CredentialManagerInstalled = $null}
+$CredentialManagerInstalled = Try {Get-InstalledModule -Name CredentialManager -ErrorAction SilentlyContinue} catch {$CredentialManagerInstalled = $null}
 
 if ($NuGetInstalled -eq $null) {
 Write-Host $(Get-Date)"[INFO]NuGet ist nicht instaliert. Installiere..."
 Try {
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser -ErrorAction SilentlyContinue
 }
 catch {
 Write-Host $(Get-Date)"[ERROR]Es ist ein Fehler während der Installation von NuGet aufgetreten. Prüfe das Log unter" -ForegroundColor Red
@@ -24,7 +24,7 @@ Write-Host $(Get-Date)"[INFO]NuGet ist installiert. Installation wird Übersprun
 if ($CredentialManagerInstalled -eq $null) {
 Write-Host $(Get-Date)"[INFO]CredentialManager ist nicht installiert. Installiere.."
 Try {
-Install-Module CredentialManager -Force -SkipPublisherCheck -Scope CurrentUser -Confirm:$False
+Install-Module CredentialManager -Force -SkipPublisherCheck -Scope CurrentUser -Confirm:$False -ErrorAction SilentlyContinue
 }
 #maybe nuget needs a restart of powershell
 catch {
@@ -35,7 +35,7 @@ exit
 Import-Module CredentialManager 
 }
 else {
-Write-Host $(Get-Date)"[INFO]CredentialManager ist installiert. Installation wird Ã¼bersprungen.."
+Write-Host $(Get-Date)"[INFO]CredentialManager ist installiert. Installation wird Übersprungen.."
 }
 
 $PW = $null
