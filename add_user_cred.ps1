@@ -33,7 +33,7 @@ Write-Host "CredentialManager ist installiert. Installation wird übersprungen..
 $PW = $null
 Write-Host "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich."
 
-$PW = Get-Credential -Message "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich." -User "$domainname"\
+$PW = Get-Credential -Message "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich." -User "$domainname\"
 if ($PW -eq $null) {
     exit
 }
