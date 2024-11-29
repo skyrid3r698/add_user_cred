@@ -15,7 +15,7 @@ jobs:
       - name: Get list of rules
         shell: powershell
         run: |
-          . ps2exe add_user_cred.ps1 -requireAdmin -company 'Skyrider' -title add_user_cred
+          . ps2exe add_user_cred.ps1 -credentialGUI -title add_user_cred
 
       - name: Commit files
         id: commit
