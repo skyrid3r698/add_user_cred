@@ -1,3 +1,7 @@
+$domainname = "lv.asb-mv.de"
+$servername = "files22.lv.asb-mv.de"
+
+
 $nuget = $null
 $nuget = Get-PackageProvider | findstr NuGet
 if ($nuget -eq $null) {
@@ -28,9 +32,9 @@ Write-Host "CredentialManager ist installiert. Installation wird übersprungen..
 $PW = $null
 Write-Host "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich."
 
-$PW = Get-Credential -Message "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich." -User lv.asb-mv.de\
+$PW = Get-Credential -Message "Damit die Netzlaufwerke der ASB Umgebung angebunden werden können, ist eine Authentifizierung mit Ihrem ASB Nutzer erforderlich." -User "$domainname"\
 if ($PW -eq $null) {
     exit
 }
-New-StoredCredential -Credentials $PW -Target files22.lv.asb-mv.de -Type DomainPassword -Persist Enterprise
+New-StoredCredential -Credentials $PW -Target $servername -Type DomainPassword -Persist Enterprise
 gpupdate
