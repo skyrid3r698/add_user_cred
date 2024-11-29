@@ -6,8 +6,7 @@ $domainname = "lv.asb-mv.de"
 $servername = "files22.lv.asb-mv.de"
 $NuGetInstalled = $null
 $NuGetInstalled = "Get-PackageProvider | findstr NuGet"
-$CredentialManagerInstalled = $null
-$CredentialManagerInstalled = Get-InstalledModule -Name CredentialManager > $null
+$CredentialManagerInstalled = Try {Get-InstalledModule -Name CredentialManager} catch {$CredentialManagerInstalled = $null}
 
 if ($NuGetInstalled -eq $null) {
 Write-Host $(Get-Date)"[INFO]NuGet ist nicht instaliert. Installiere..."
