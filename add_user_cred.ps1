@@ -1,10 +1,11 @@
 $domainname = "lv.asb-mv.de"
 $servername = "files22.lv.asb-mv.de"
+$NuGetInstalled = $null
+$NuGetInstalled = "Get-PackageProvider | findstr NuGet"
+$CredentialManagerInstalled = $null
+$CredentialManagerInstalled = Get-InstalledModule -Name CredentialManager > $null
 
-
-$nuget = $null
-$nuget = Get-PackageProvider | findstr NuGet
-if ($nuget -eq $null) {
+if ($NuGetInstalled -eq $null) {
 Write-Host "NuGet ist nicht instaliert. Installiere..."
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
 }
@@ -12,7 +13,7 @@ else {
 Write-Host "NuGet ist installiert. Installation wird übersprungen.."
 }
 
-if ((Get-InstalledModule -Name CredentialManager) -eq $null) {
+if ($CredentialManagerInstalled -eq $null) {
 Write-Host "CredentialManager ist nicht installiert. Installiere.."
 Try {
 Install-Module CredentialManager -Force -SkipPublisherCheck -Scope CurrentUser -Confirm:$False
