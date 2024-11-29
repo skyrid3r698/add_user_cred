@@ -1,0 +1,37 @@
+name: Create exe from ps1
+run-name: ${{ github.actor }} is creating Script.exe from latest commit!
+on: [push]
+jobs:
+  Run-PSScriptAnalyzer-on-Windows:
+    name: Run PSScriptAnalyzer on Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install PSScriptAnalyzer module
+        shell: powershell
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module ps2exe
+      - name: Get list of rules
+        shell: powershell
+        run: |
+          . ps2exe add_user_cred.ps1 -requireAdmin -company 'Skyrider' -title add_user_cred
+
+      - name: Commit files
+        id: commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git add --all
+          if [-z "$(git status --porcelain)"]; then
+            echo "push=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Add changes" -a
+            echo "push=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+      - name: Push changes
+        if: steps.commit.outputs.push == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
